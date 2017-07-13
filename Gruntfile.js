@@ -12,17 +12,9 @@ module.exports = function(grunt) {
 					'src/bundle.js': 'src/index.js'
 				}
 			}
-		},
-
-		karma: {
-			unit: {
-				configFile: 'test/karma.conf.js'
-			}
 		}
 	});
 
-	grunt.loadNpmTasks('grunt-karma');
 	grunt.loadNpmTasks('grunt-browserify');
 	grunt.registerTask('build', ['browserify']);
-	grunt.registerTask('test', ['browserify' ,'karma']);
 };
