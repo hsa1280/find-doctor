@@ -28,7 +28,7 @@ function performRequest(endpoint, method, data, successCB, errorCB) {
 }
 
 app.get('/doctorList', function(req, res) {
-    var url = '/2016-03-01/doctors?location=37.773%2C-122.413%2C100&user_location=37.773%2C-122.413&skip=0&limit=10&user_key=' + user_key;
+    var url = '/2016-03-01/doctors?location=37.773%2C-122.413%2C100&user_location=37.773%2C-122.413&skip=0&limit=20&user_key=' + user_key;
     performRequest(url, 'GET', {}, function(response) {
         // console.log(response);
         res.send(response);
@@ -36,7 +36,31 @@ app.get('/doctorList', function(req, res) {
         console.log('Error occurred in getting users', error)
         res.status(400).send(error);
     });
-})
+});
+
+app.get('/doctorDetail', function(req, res) {
+    var doctorId = req.query.doctorId;
+    var url = `/2016-03-01/doctors/${doctorId}?user_key=${user_key}`;
+    performRequest(url, 'GET', {}, function(response) {
+        // console.log(response);
+        res.send(response);
+    }, function(error) {
+        console.log('Error occurred in getting users', error)
+        res.status(400).send(error);
+    });
+});
+
+app.get('/similarDoctorList', function(req, res) {
+    var practiceUid = req.query.practiceUid;
+    var url = `/2016-03-01/practices/${practiceUid}/doctors?skip=0&limit=10&user_key=${user_key}`
+    performRequest(url, 'GET', {}, function(response) {
+        // console.log(response);
+        res.send(response);
+    }, function(error) {
+        console.log('Error occurred in getting users', error)
+        res.status(400).send(error);
+    });
+});
 
 app.listen(port, () => {
   console.log('App is listening to port ', port);

@@ -1,17 +1,27 @@
 const annotation = ['$state', '$http'];
 
-class doctorListController {
+class DoctorListController {
   constructor($state, $http) {
     this.name = 'shian';
     this.$http = $http;
+    this.doctorList = [];
+    this.categorySelect = '';
+    this.categoryList = [];
+    this.getDoctorList();
   }
 
   getDoctorList() {
     this.$http.get('/doctorList').then((response) => {
-      console.log(response.data);
+      console.log(response.data.data);
+      this.doctorList = response.data.data;
+      this.doctorList.forEach(doctor => {
+        if (doctor && doctor.specialties && this.categoryList.indexOf(doctor.specialties[0].category) === -1) {
+          this.categoryList.push(doctor.specialties[0].category);
+        }
+      });
     })
   }
 }
 
-doctorListController.$inject = annotation;
-export default doctorListController;
+DoctorListController.$inject = annotation;
+export default DoctorListController;
