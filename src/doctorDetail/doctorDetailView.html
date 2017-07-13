@@ -30,7 +30,7 @@
       <span class="caption">{{someone.profile.first_name}} {{someone.profile.last_name}}</span>
     </a>
 </div>
-<div ng-if="!doctorDetailController.similarDoctorList && doctorDetailController.searchSimilarDoctors">
+<div ng-if="doctorDetailController.similarDoctorList.length === 0 && doctorDetailController.searchSimilarDoctors">
   no similar doctors
 </div>
 
